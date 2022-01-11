@@ -1,0 +1,34 @@
+    google.charts.load('current', {'packages':['gantt']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function daysToMilliseconds(days) {
+      return days * 24 * 60 * 60 * 1000;
+    }
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Task ID');
+      data.addColumn('string', 'Task Name');
+      data.addColumn('date', 'Start Date');
+      data.addColumn('date', 'End Date');
+      data.addColumn('number', 'Duration');
+      data.addColumn('number', 'Percent Complete');
+      data.addColumn('string', 'Dependencies');
+
+      data.addRows([
+        ['key1', 'Initiate', new Date(2022, 0, 1), new Date(2022, 0, 31), null,  10,  null],
+        ['key2', 'Plan', new Date(2022, 1, 1),new Date(2022, 1, 25), null, 0, 'key1'],
+        ['key3', 'Execute', new Date(2022, 1, 26), new Date(2022, 2, 10),null, 0, 'key2'],
+        ['key4', 'Evaluate', new Date(2022, 2, 11), new Date(2022, 3, 5),null, 0, 'key3'],
+        ['key5', 'Close', new Date(2022, 3, 6), new Date(2022, 3, 30),null, 0, 'key4']
+      ]);
+
+      var options = {
+        height: 275
+      };
+
+      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }
